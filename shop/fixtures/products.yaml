@@ -1,15 +1,49 @@
 - model: shop.product
   pk: 1
   fields:
-    name: Стол
-    price: 2000
+    name: Конструктор «Городская стройка»
+    price: 3490
 - model: shop.product
   pk: 2
   fields:
-    name: Стул
-    price: 1000
+    name: Мягкий медведь Тедди
+    price: 1290
 - model: shop.product
   pk: 3
   fields:
-    name: Табурет
-    price: 500
+    name: Радиоуправляемая машинка
+    price: 2750
+- model: shop.product
+  pk: 4
+  fields:
+    name: Набор юного химика
+    price: 1999
+- model: shop.product
+  pk: 5
+  fields:
+    name: Пазл «Карта мира», 500 деталей
+    price: 690
+- model: shop.promocode
+  pk: 1
+  fields:
+    code: TOY5
+    discount: 5
+    is_active: true
+- model: shop.promocode
+  pk: 2
+  fields:
+    code: TOY10
+    discount: 10
+    is_active: true
+- model: shop.promocode
+  pk: 3
+  fields:
+    code: TOY15
+    discount: 15
+    is_active: true
+- model: shop.promocode
+  pk: 4
+  fields:
+    code: SUMMER2021
+    discount: 15
+    is_active: false

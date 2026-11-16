@@ -1,28 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Покупка</title>
-</head>
-<body>
-    <div>
-        <h3>Покупка</h3>
-        <form method="post">{% csrf_token %}
-            <input type="hidden" value="{{ view.kwargs.product_id }}" name="product" />
-            <table>
-                <tr>
-                    <td><p>Введите свое имя </p></td>
-                    <td><input type="text" name="person" /> </td>
-                </tr>
-                <tr>
-                    <td><p>Введите адрес доставки:</p></td>
-                    <td>
-                        <input type="text" name="address" />
-                    </td>
-                </tr>
-                <tr><td><input type="submit" value="Отправить" /> </td><td></td></tr>
-            </table>
-        </form>
-    </div>
-</body>
-</html>
+{% extends 'shop/base.html' %}
+{% block title %}Покупка{% endblock %}
+{% block content %}
+<section class="card">
+    <h3>Покупка: {{ product.name }}</h3>
+    <p>Цена: <span class="price">{{ product.price }} руб.</span>
+       Промокод (5, 10 или 15 %) можно указать ниже.</p>
+    <form method="post">{% csrf_token %}
+        <input type="hidden" value="{{ product.id }}" name="product" />
+        {{ form.non_field_errors }}
+        <div class="field">
+            <label for="id_person">Введите свое имя:</label>
+            <input type="text" id="id_person" name="person"
+                   value="{{ form.person.value|default_if_none:'' }}" />
+            {{ form.person.errors }}
+        </div>
+        <div class="field">
+            <label for="id_address">Введите адрес доставки:</label>
+            <input type="text" id="id_address" name="address"
+                   value="{{ form.address.value|default_if_none:'' }}" />
+            {{ form.address.errors }}
+        </div>
+        <div class="field">
+            <label for="id_promo">Промокод (необязательно):</label>
+            <input type="text" id="id_promo" name="promo"
+                   value="{{ form.promo.value|default_if_none:'' }}" />
+            {{ form.promo.errors }}
+        </div>
+        <input type="submit" class="btn" value="Отправить" />
+    </form>
+</section>
+{% endblock %}

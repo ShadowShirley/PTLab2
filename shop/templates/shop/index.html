@@ -1,26 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Товары</title>
-</head>
-<body>
-    <div>
-        <h3>Список</h3>
-        <table>
+{% extends 'shop/base.html' %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<section class="card">
+    <h3>Промокод</h3>
+    <form method="get" class="inline-form">
+        <input type="text" name="promo" value="{{ promo_input }}"
+               placeholder="Например, TOY10" />
+        <input type="submit" class="btn" value="Применить" />
+    </form>
+    {% if promo_code %}
+        <p class="msg-ok">Промокод <b>{{ promo_code.code }}</b> применен:
+            скидка {{ promo_code.discount }} % на все товары.</p>
+    {% elif promo_error %}
+        <p class="msg-err">Промокод «{{ promo_input }}» не найден или неактивен.</p>
+    {% endif %}
+</section>
+<section class="card">
+    <h3>Список товаров</h3>
+    <table>
+        <tr>
+            <th>Наименование</th>
+            <th>Цена, руб.</th>
+            <th></th>
+        </tr>
+        {% for p in products %}
             <tr>
-                <td><p>Наименование</p></td>
-                <td><p>Цена</p></td>
-                <td></td>
+                <td>{{ p.name }}</td>
+                <td class="price">
+                    {% if p.final_price != p.price %}
+                        <span class="old-price">{{ p.price }}</span>
+                    {% endif %}
+                    {{ p.final_price }}
+                </td>
+                <td><a class="btn" href="{% url 'buy' p.id %}{% if promo_code %}?promo={{ promo_code.code|urlencode }}{% endif %}">Купить</a></td>
             </tr>
-            {% for p in products %}
-                <tr>
-                    <td><p>{{ p.name }}</p></td>
-                    <td><p>{{ p.price }}</p></td>
-                    <td><p><a href="/buy/{{ p.id }}">Купить</a></p></td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
+        {% empty %}
+            <tr><td colspan="3">Товаров пока нет.</td></tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}
